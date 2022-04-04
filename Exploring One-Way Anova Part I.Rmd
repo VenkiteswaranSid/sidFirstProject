@@ -5,5 +5,19 @@ date: '2022-04-04'
 output: html_document
 ---
 
+```{r}
+library(tidyverse)
+library(rvest)
+library(htmltools)
+```
+
 ## Question 1
   A sports shoe company is comparing how high athletes can jump when wearing a new model of their shoe compared to the old model of the same shoe.
+  
+## Question 2
+  Null Hypothesis: When wearing the new model of the shoe, athletes won't see an increase in the height they are able to jump up to.
+  
+  Alternative Hypothesis: When wearing the new model of the shoe, athletes will be able to jump to a higher height. 
+  
+
+
