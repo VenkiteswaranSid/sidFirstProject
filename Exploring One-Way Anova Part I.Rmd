@@ -1,0 +1,9 @@
+---
+title: "Exploring One-Way Anova Part I"
+author: "Siddharth V"
+date: '2022-04-04'
+output: html_document
+---
+
+## Question 1
+  A sports shoe company is comparing how high athletes can jump when wearing two different models of the shoes they sell.
