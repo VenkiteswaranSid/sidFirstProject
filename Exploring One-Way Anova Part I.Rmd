@@ -6,4 +6,4 @@ output: html_document
 ---
 
 ## Question 1
-  A sports shoe company is comparing how high athletes can jump when wearing two different models of the shoes they sell.
+  A sports shoe company is comparing how high athletes can jump when wearing a new model of their shoe compared to the old model of the same shoe.
