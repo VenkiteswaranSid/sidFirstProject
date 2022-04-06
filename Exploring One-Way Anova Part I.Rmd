@@ -60,5 +60,5 @@ mj_df %>%
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
 ```
-
+## This graph is a box plot of the positions listed in the Michael Jordan data frame plotted along with the points averaged by those players at the positions in the data frame. The red dots represent the mean points averaged at each position.
 
