@@ -62,3 +62,15 @@ mj_df %>%
 ```
 ## This graph is a box plot of the positions listed in the Michael Jordan data frame plotted along with the points averaged by those players at the positions in the data frame. The red dots represent the mean points averaged at each position.
 
+## Creating a violin plot for the data
+```{r}
+mj_df %>%  
+  ggplot(aes(x = Pos, y = PTS)) +
+  geom_violin() +
+  stat_summary(fun ="mean", color = 'red')+
+  labs(x = 'Position', y = 'Points Averaged', title = 'Violin Plot for One-Way ANOVA') +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+
+```
+## This graph is a violin plot that plots the position against the points averaged with all the players in the season where Michael Jordan won his first championship. The red dot represents the mean points averaged among positions. Most of the data across the positions is concentrated in the single digits, and the position where the data is most spread out is small forward, or SF.
