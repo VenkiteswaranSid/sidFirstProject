@@ -96,6 +96,13 @@ summary_mj_df = mj_df %>%
 summary_mj_df
 ```
 
+
+## Removing NAs from Summary Data Frame
+```{r}
+mod_summary_mj_df = na.omit(summary_mj_df)
+mod_summary_mj_df
+```
+
 ## Summary Notes
   The sample size is not equal across positions
   Since SF-SG and SG-SF only had one entry in the data frame, there was no standard deviation
@@ -111,6 +118,13 @@ summary_mj_df
   The standard deviation measures the variability within the sample, because it looks at all of the data points in the sample and then assesses the distance of each point from the mean and then finds the average distance.
   
 ## The point of One-Way ANOVA is to determine if the population means are equal using the information from a sample. A good way to think of One-Way ANOVA is to think of the ratio between the standard deviation of the sample means compared to the mean of the standard deviations.
+
+## Calculating One-Way Anova
+```{r}
+ratio_anova = sd(mod_summary_mj_df$mean_pts) / mean(mod_summary_mj_df$sd_pts)
+ratio_anova
+```
+
   
   
 
