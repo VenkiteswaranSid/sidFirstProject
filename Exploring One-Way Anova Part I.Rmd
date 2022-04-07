@@ -11,15 +11,15 @@ library(rvest)
 library(htmltools)
 ```
 
-## Question 1
+## Question 1: Create an example when it would be appropriate to implement One-Way ANOVA.
   A sports shoe company is comparing how high athletes can jump when wearing a new model of their shoe compared to the old model of the same shoe.
   
-## Question 2
+## Question 2: State the null the alternative hypotheses for the example that you came up with for your example in question 1.
   Null Hypothesis: When wearing the new model of the shoe, athletes won't see an increase in the height they are able to jump up to.
   
   Alternative Hypothesis: When wearing the new model of the shoe, athletes will be able to jump to a higher height. 
   
-## Question 3
+## Question 3: State the null the alternative hypotheses based on these variables.
   Null Hypothesis: There is no change in points per game over the different positions.
   
   Alternative Hypothesis: There is a change in points per game over the different positions.
