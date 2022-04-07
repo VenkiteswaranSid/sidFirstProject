@@ -100,6 +100,8 @@ summary_mj_df
 ## Question 2: What does standard deviation measure within the sample? the center or variability? Explain.
   The standard deviation measures the variability within the sample, because it looks at all of the data points in the sample and then assesses the distance of each point from the mean and then finds the average distance.
   
+## The point of One-Way ANOVA is to determine if the population means are equal using the information from a sample. A good way to think of One-Way ANOVA is to think of the ratio between the standard deviation of the sample means compared to the mean of the standard deviations.
+  
   
 
 
