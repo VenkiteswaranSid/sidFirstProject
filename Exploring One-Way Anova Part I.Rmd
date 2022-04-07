@@ -86,5 +86,10 @@ summary_mj_df = mj_df %>%
 summary_mj_df
 ```
 
-
+## Summary Notes
+  The sample size is not equal across positions
+  Since SF-SG and SG-SF only had one entry in the data frame, there was no standard deviation
+  The mean points averaged per game is greatest for SF during the year where MJ won his first championship
+  PF has the greatest sample size among all the positions
+  While SF has the largest mean points averaged, it also has the greatest sd points averaged, which shows that the data is very spread out
 
