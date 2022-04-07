@@ -74,3 +74,17 @@ mj_df %>%
 
 ```
 ## This graph is a violin plot that plots the position against the points averaged with all the players in the season where Michael Jordan won his first championship. The red dot represents the mean points averaged among positions. Most of the data across the positions is concentrated in the single digits, and the position where the data is most spread out is small forward, or SF.
+
+## Summarization of the Data
+```{r}
+summary_mj_df = mj_df %>% 
+  group_by(Pos) %>% 
+  summarise(sample_size = n(),
+            mean_pts = mean(PTS,na.rm = TRUE),
+            sd_pts = sd(PTS,na.rm = TRUE))
+
+summary_mj_df
+```
+
+
+
