@@ -92,4 +92,16 @@ summary_mj_df
   The mean points averaged per game is greatest for SF during the year where MJ won his first championship
   PF has the greatest sample size among all the positions
   While SF has the largest mean points averaged, it also has the greatest sd points averaged, which shows that the data is very spread out
+  
+  
+## Question 1: What does mean measure with the sample? the center or variability? Explain.
+  The mean measures the center of the sample, because it uses all of the data provided and tries to find the value that is closest to the middle of the entire data set.
+  
+## Question 2: What does standard deviation measure within the sample? the center or variability? Explain.
+  The standard deviation measures the variability within the sample, because it looks at all of the data points in the sample and then assesses the distance of each point from the mean and then finds the average distance.
+  
+  
+
+
+  
 
