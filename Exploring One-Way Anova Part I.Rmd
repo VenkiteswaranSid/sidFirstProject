@@ -19,10 +19,16 @@ library(htmltools)
   
   Alternative Hypothesis: When wearing the new model of the shoe, athletes will be able to jump to a higher height. 
   
+## The general idea is to acquire a sample from the population and use the evidence from the sample to either reject the claim (the null hypothesis) or not reject the claim (the null hypothesis).
+
+## Important Caveat: The data that we will investigate does not naturally follow the general premise of statistical theory (we are not taking a random sample), but we will still use the data as material to learn about One-Way ANOVA even though the population does not exist.
+  
 ## Question 3: State the null the alternative hypotheses based on these variables.
   Null Hypothesis: There is no change in points per game over the different positions.
   
   Alternative Hypothesis: There is a change in points per game over the different positions.
+  
+## Loading in the data for the first year where MJ won the championship
 ```{r}
 ## Creating a url for Jordan's career
 mj_url <- read_html('https://www.basketball-reference.com/leagues/NBA_1991_per_game.html')
@@ -50,6 +56,8 @@ mj_df = mj_df_without_name %>%
   mutate(df_name = 'MJ')
 ```
 
+## Visualization of data is always a great place to start to get a general understanding of what is going on with the data. We are going to explore two types of plots to gain a better understanding of the data.
+
 ## Creating a box plot for the data
 ```{r}
 mj_df %>%  
@@ -61,6 +69,8 @@ mj_df %>%
   theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
 ```
 ## This graph is a box plot of the positions listed in the Michael Jordan data frame plotted along with the points averaged by those players at the positions in the data frame. The red dots represent the mean points averaged at each position.
+
+## The violin plot allows us to visualize where a majority of the data lies without eyeballing where the median within the box. The violin plot can also be considered a mix of a density and box plot, in that it shows where a majority of the data is as well as it distribution.
 
 ## Creating a violin plot for the data
 ```{r}
