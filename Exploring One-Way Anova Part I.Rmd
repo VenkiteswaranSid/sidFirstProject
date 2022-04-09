@@ -125,8 +125,13 @@ ratio_anova = sd(mod_summary_mj_df$mean_pts) / mean(mod_summary_mj_df$sd_pts)
 ratio_anova
 ```
 
-  
-  
+## In a proper implementation of One-Way ANOVA we assume that the standard deviation across all groups are equal. A good gauge to see if the standard deviations are approximately equal is the look at the ratio between the max and min standard deviation. If this ratio is less than 2 this assumption has been met, if not interesting result will occur...
+```{r}
+max(mod_summary_mj_df$sd_pts)/min(mod_summary_mj_df$sd_pts)
+```
+## The assumption of the standard deviations being apporixmately equal has been met. If it is not less than 2, the following description does not work well for this data. If your box plots are extremely different in your post for part 1 and/or the means are extremely different from your summarized data (above), the standard deviation ratio \(s_{max}/s_{min}\) is the issue.
+
+
 
 
   
