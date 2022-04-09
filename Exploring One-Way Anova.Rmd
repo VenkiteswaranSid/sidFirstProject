@@ -1,0 +1,154 @@
+---
+title: "Exploring One-Way Anova"
+author: "Siddharth V"
+date: '2022-04-04'
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(htmltools)
+library(tidymodels)
+```
+
+## Question 1: Create an example when it would be appropriate to implement One-Way ANOVA.
+  A sports shoe company is comparing how high athletes can jump when wearing a new model of their shoe compared to the old model of the same shoe.
+  
+## Question 2: State the null the alternative hypotheses for the example that you came up with for your example in question 1.
+  Null Hypothesis: When wearing the new model of the shoe, athletes won't see an increase in the height they are able to jump up to.
+  
+  Alternative Hypothesis: When wearing the new model of the shoe, athletes will be able to jump to a higher height. 
+  
+## The general idea is to acquire a sample from the population and use the evidence from the sample to either reject the claim (the null hypothesis) or not reject the claim (the null hypothesis).
+
+## Important Caveat: The data that we will investigate does not naturally follow the general premise of statistical theory (we are not taking a random sample), but we will still use the data as material to learn about One-Way ANOVA even though the population does not exist.
+  
+## Question 3: State the null the alternative hypotheses based on these variables.
+  Null Hypothesis: There is no change in points per game over the different positions.
+  
+  Alternative Hypothesis: There is a change in points per game over the different positions.
+  
+## Loading in the data for the first year where MJ won the championship
+```{r}
+## Creating a url for Jordan's career
+mj_url <- read_html('https://www.basketball-reference.com/leagues/NBA_1991_per_game.html')
+
+## Turning that information into a list
+mj_info_lst = mj_url %>%
+  html_nodes('#per_game_stats') %>%
+  html_table()
+
+## Creating a temporary data frame to hold the information from the list
+temp_mj_df = mj_info_lst[[1]]
+
+## Filtering out the season where he first won the championship and making that the lj data frame
+mj_df_without_name = temp_mj_df %>%
+  filter(Rk != 'Rk') %>%
+  mutate_if(~any(str_detect(string = ., pattern = '^-?[0-9]\\d*(\\.\\d+)?$')),
+            ~ as.numeric(.)) %>%
+  distinct(Player,max(G),.keep_all = TRUE)
+
+## Fixing column names
+colnames(mj_df_without_name)[c(11,14,17,18,21)] = c('FG_percent', '3P_percent', '2P_percent', 'eFG_percent', 'FT_percent')
+
+## Adding a column with the data frame name
+mj_df = mj_df_without_name %>%
+  mutate(df_name = 'MJ')
+```
+
+## Visualization of data is always a great place to start to get a general understanding of what is going on with the data. We are going to explore two types of plots to gain a better understanding of the data.
+
+## Creating a box plot for the data
+```{r}
+mj_df %>%  
+  ggplot(aes(x = Pos, y = PTS)) +
+  geom_boxplot() +
+  stat_summary(fun ="mean", color = 'red')+
+  labs(x = 'Position', y = 'Points Averaged', title = 'Box Plot for One-Way ANOVA') +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+```
+## This graph is a box plot of the positions listed in the Michael Jordan data frame plotted along with the points averaged by those players at the positions in the data frame. The red dots represent the mean points averaged at each position.
+
+## The violin plot allows us to visualize where a majority of the data lies without eyeballing where the median within the box. The violin plot can also be considered a mix of a density and box plot, in that it shows where a majority of the data is as well as it distribution.
+
+## Creating a violin plot for the data
+```{r}
+mj_df %>%  
+  ggplot(aes(x = Pos, y = PTS)) +
+  geom_violin() +
+  stat_summary(fun ="mean", color = 'red')+
+  labs(x = 'Position', y = 'Points Averaged', title = 'Violin Plot for One-Way ANOVA') +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+
+```
+## This graph is a violin plot that plots the position against the points averaged with all the players in the season where Michael Jordan won his first championship. The red dot represents the mean points averaged among positions. Most of the data across the positions is concentrated in the single digits, and the position where the data is most spread out is small forward, or SF.
+
+## Summarization of the Data
+```{r}
+summary_mj_df = mj_df %>% 
+  group_by(Pos) %>% 
+  summarise(sample_size = n(),
+            mean_pts = mean(PTS,na.rm = TRUE),
+            sd_pts = sd(PTS,na.rm = TRUE))
+
+summary_mj_df
+```
+
+
+## Removing NAs from Summary Data Frame
+```{r}
+mod_summary_mj_df = na.omit(summary_mj_df)
+mod_summary_mj_df
+```
+
+## Summary Notes
+  The sample size is not equal across positions
+  Since SF-SG and SG-SF only had one entry in the data frame, there was no standard deviation
+  The mean points averaged per game is greatest for SF during the year where MJ won his first championship
+  PF has the greatest sample size among all the positions
+  While SF has the largest mean points averaged, it also has the greatest sd points averaged, which shows that the data is very spread out
+  
+  
+## Question 1: What does mean measure with the sample? the center or variability? Explain.
+  The mean measures the center of the sample, because it uses all of the data provided and tries to find the value that is closest to the middle of the entire data set.
+  
+## Question 2: What does standard deviation measure within the sample? the center or variability? Explain.
+  The standard deviation measures the variability within the sample, because it looks at all of the data points in the sample and then assesses the distance of each point from the mean and then finds the average distance.
+  
+## The point of One-Way ANOVA is to determine if the population means are equal using the information from a sample. A good way to think of One-Way ANOVA is to think of the ratio between the standard deviation of the sample means compared to the mean of the standard deviations.
+
+## Calculating One-Way Anova
+```{r}
+ratio_anova = sd(mod_summary_mj_df$mean_pts) / mean(mod_summary_mj_df$sd_pts)
+ratio_anova
+```
+
+## In a proper implementation of One-Way ANOVA we assume that the standard deviation across all groups are equal. A good gauge to see if the standard deviations are approximately equal is the look at the ratio between the max and min standard deviation. If this ratio is less than 2 this assumption has been met, if not interesting result will occur...
+```{r}
+max(mod_summary_mj_df$sd_pts)/min(mod_summary_mj_df$sd_pts)
+```
+## The assumption of the standard deviations being apporixmately equal has been met. If it is not less than 2, the following description does not work well for this data. If your box plots are extremely different in your post for part 1 and/or the means are extremely different from your summarized data (above), the standard deviation ratio \(s_{max}/s_{min}\) is the issue.
+
+## Implementation of the One-Way ANOVA Model
+```{r}
+model1 <- aov(PTS ~ Pos, mj_df)
+tidy(model1)
+```
+## We are going to explain each number
+K: number of groups
+n: sample size
+
+## In this problem...
+K = 7 (7 positions: PG, SG, SF, PF, C, SG-SF, SF-SG)
+n = 386
+
+
+
+
+
+
+  
+
