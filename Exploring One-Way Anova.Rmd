@@ -142,8 +142,16 @@ K: number of groups
 n: sample size
 
 ## In this problem...
-K = 7 (7 positions: PG, SG, SF, PF, C, SG-SF, SF-SG)
+```{r}
+K = 7 
 n = 386
+```
+
+## Calculating the degrees of freedom
+```{r}
+df_groups = K - 1 
+df_residuals = n - K
+```
 
 
 
