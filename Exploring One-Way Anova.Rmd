@@ -153,6 +153,21 @@ df_groups = K - 1
 df_residuals = n - K
 ```
 
+## Sums of Square of Groups
+```{r}
+overall_mean = mean(mj_df$PTS, na.rm = TRUE)
+
+SS_groups_df = mj_df %>% 
+  group_by(Pos) %>% 
+  summarise(group_means = mean(PTS,na.rm = TRUE), group_sample_size = n()) %>% 
+  mutate(mean_diff = (group_means - overall_mean)) %>% 
+  mutate(mean_diffsq = (mean_diff)^2) %>% 
+  mutate(sam_mean_diffsq = (group_sample_size)* mean_diffsq )
+  
+(SS_groups = sum(SS_groups_df$sam_mean_diffsq))
+
+```
+
 
 
 
