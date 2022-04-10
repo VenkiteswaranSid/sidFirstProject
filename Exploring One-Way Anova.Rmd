@@ -191,6 +191,10 @@ SS_residuals_df = mod2_mj_df %>%
 (TS = MS_groups / MS_residual)
 ```
 
+## p value
+```{r}
+1 -  pf(TS, df_groups,df_residuals)
+```
 
 
   
