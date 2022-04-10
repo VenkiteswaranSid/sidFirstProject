@@ -181,6 +181,11 @@ SS_residuals_df = mod2_mj_df %>%
 (MS_groups = SS_groups/df_groups)
 ```
 
+## Residuals
+```{r}
+(MS_residual = SS_residuals/df_residuals)
+```
+
 
 
   
