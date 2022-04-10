@@ -55,13 +55,16 @@ colnames(mj_df_without_name)[c(11,14,17,18,21)] = c('FG_percent', '3P_percent', 
 ## Adding a column with the data frame name
 mj_df = mj_df_without_name %>%
   mutate(df_name = 'MJ')
+
+mod_mj_df = subset(mj_df, Pos != 'SG-SF')
+mod2_mj_df = subset(mod_mj_df, Pos != 'SF-SG')
 ```
 
 ## Visualization of data is always a great place to start to get a general understanding of what is going on with the data. We are going to explore two types of plots to gain a better understanding of the data.
 
 ## Creating a box plot for the data
 ```{r}
-mj_df %>%  
+mod2_mj_df %>%  
   ggplot(aes(x = Pos, y = PTS)) +
   geom_boxplot() +
   stat_summary(fun ="mean", color = 'red')+
@@ -75,7 +78,7 @@ mj_df %>%
 
 ## Creating a violin plot for the data
 ```{r}
-mj_df %>%  
+mod2_mj_df %>%  
   ggplot(aes(x = Pos, y = PTS)) +
   geom_violin() +
   stat_summary(fun ="mean", color = 'red')+
@@ -88,20 +91,13 @@ mj_df %>%
 
 ## Summarization of the Data
 ```{r}
-summary_mj_df = mj_df %>% 
+summary_mj_df = mod2_mj_df %>% 
   group_by(Pos) %>% 
   summarise(sample_size = n(),
             mean_pts = mean(PTS,na.rm = TRUE),
             sd_pts = sd(PTS,na.rm = TRUE))
 
 summary_mj_df
-```
-
-
-## Removing NAs from Summary Data Frame
-```{r}
-mod_summary_mj_df = na.omit(summary_mj_df)
-mod_summary_mj_df
 ```
 
 ## Summary Notes
@@ -122,19 +118,19 @@ mod_summary_mj_df
 
 ## Calculating One-Way Anova
 ```{r}
-ratio_anova = sd(mod_summary_mj_df$mean_pts) / mean(mod_summary_mj_df$sd_pts)
+ratio_anova = sd(summary_mj_df$mean_pts) / mean(summary_mj_df$sd_pts)
 ratio_anova
 ```
 
 ## In a proper implementation of One-Way ANOVA we assume that the standard deviation across all groups are equal. A good gauge to see if the standard deviations are approximately equal is the look at the ratio between the max and min standard deviation. If this ratio is less than 2 this assumption has been met, if not interesting result will occur...
 ```{r}
-max(mod_summary_mj_df$sd_pts)/min(mod_summary_mj_df$sd_pts)
+max(summary_mj_df$sd_pts)/min(summary_mj_df$sd_pts)
 ```
 ## The assumption of the standard deviations being apporixmately equal has been met. If it is not less than 2, the following description does not work well for this data. If your box plots are extremely different in your post for part 1 and/or the means are extremely different from your summarized data (above), the standard deviation ratio \(s_{max}/s_{min}\) is the issue.
 
 ## Implementation of the One-Way ANOVA Model
 ```{r}
-model1 <- aov(PTS ~ Pos, mj_df)
+model1 <- aov(PTS ~ Pos, mod2_mj_df)
 tidy(model1)
 ```
 ## We are going to explain each number
@@ -155,9 +151,9 @@ df_residuals = n - K
 
 ## Sums of Square of Groups
 ```{r}
-overall_mean = mean(mj_df$PTS, na.rm = TRUE)
+overall_mean = mean(mod2_mj_df$PTS, na.rm = TRUE)
 
-SS_groups_df = mj_df %>% 
+SS_groups_df = mod2_mj_df %>% 
   group_by(Pos) %>% 
   summarise(group_means = mean(PTS,na.rm = TRUE), group_sample_size = n()) %>% 
   mutate(mean_diff = (group_means - overall_mean)) %>% 
@@ -168,6 +164,15 @@ SS_groups_df = mj_df %>%
 
 ```
 
+## Sums of Square Residuals
+```{r}
+SS_residuals_df = mod2_mj_df %>% 
+  group_by(Pos) %>% 
+  summarise(sd_group = sd(PTS, na.rm = TRUE), group_sample_size = n()) %>% 
+  mutate(sp2 =  (group_sample_size - 1)*(sd_group^2))
+
+(SS_residuals = sum(SS_residuals_df$sp2))
+```
 
 
 
