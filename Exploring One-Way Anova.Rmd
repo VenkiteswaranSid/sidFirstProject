@@ -174,7 +174,12 @@ SS_residuals_df = mod2_mj_df %>%
 (SS_residuals = sum(SS_residuals_df$sp2))
 ```
 
+## Mean Square
 
+## Groups
+```{r}
+(MS_groups = SS_groups/df_groups)
+```
 
 
 
