@@ -1,0 +1,21 @@
+---
+title: "Two Way Anova Part 1"
+author: "Siddharth V"
+date: '2022-04-13'
+output: html_document
+---
+
+## The purpose of Two-Way ANOVA
+The primary purpose of two-way another is to determine if two explanatory variables have an impact on a response variable, in other words, are the means the same across each level of an explanatory variables as well the interaction of the explanatory variables on the response. It works in a very subtle way, so lets use the mtcars data frame to make sense of this technique. Let’s say we want to know whether the means of miles per gallon are the same across the levels of cylinders (4, 6, 8) as well as the the means of miles per gallon across the transmission types (i.e., manual and automatic).
+
+Example 1: A farmer has three types of fertilizer and four types of corn. She wants to determine whether the three types of fertilizer and four types of corn has the same impact on her crop yield. They are three questions that she could ask:
+
+Is the population mean of crop yield the same for each fertilizer?
+Is the population mean of crop yield the same for each type of corn?
+Is there an interaction effect on crop yield between fertilizer and corn type?
+
+Example 2: Does the type of drink (red bull, coffee, orange juice or water) or type of food (donuts or eggs) before a 10K have an impact on finishing time? Again, there are now three questions that can be asked:
+
+Determine whether the population mean of finishing time of the 10K the same for these four drinks.
+Determine whether the population mean of finishing time of the 10K the same for the two types of food.
+Determine whether there is an interaction effect between food and drink types on the 10K finishing time.
