@@ -5,6 +5,10 @@ date: '2022-04-13'
 output: html_document
 ---
 
+```{r}
+library(tidyverse)
+```
+
 ## The purpose of Two-Way ANOVA
 The primary purpose of two-way another is to determine if two explanatory variables have an impact on a response variable, in other words, are the means the same across each level of an explanatory variables as well the interaction of the explanatory variables on the response. It works in a very subtle way, so lets use the mtcars data frame to make sense of this technique. Let’s say we want to know whether the means of miles per gallon are the same across the levels of cylinders (4, 6, 8) as well as the the means of miles per gallon across the transmission types (i.e., manual and automatic).
 
@@ -33,6 +37,45 @@ The null hypothesis for Two-Way ANOVA is that the population means are equal acr
 ## Question 2: State the null the alternative hypotheses for the example that you came up with for your example in question 1.
 Null: The population means of test scores are the same across flashcard type.
 Alternative: The population means of test scores are not the same across flashcard type.
+
+## The general idea is to acquire a sample from the population and use the evidence from the sample to either reject the claim (the null hypothesis) or not reject the claim (the null hypothesis).
+
+## Creating and manipulating the MJ data frame
+```{r}
+## Creating a url for Jordan's career
+mj_url <- read_html('https://www.basketball-reference.com/leagues/NBA_1991_per_game.html')
+
+## Turning that information into a list
+mj_info_lst = mj_url %>%
+  html_nodes('#per_game_stats') %>%
+  html_table()
+
+## Creating a temporary data frame to hold the information from the list
+temp_mj_df = mj_info_lst[[1]]
+
+## Filtering out the season where he first won the championship and making that the lj data frame
+mj_df_without_name = temp_mj_df %>%
+  filter(Rk != 'Rk') %>%
+  mutate_if(~any(str_detect(string = ., pattern = '^-?[0-9]\\d*(\\.\\d+)?$')),
+            ~ as.numeric(.)) %>%
+  distinct(Player,max(G),.keep_all = TRUE)
+
+## Fixing column names
+colnames(mj_df_without_name)[c(11,14,17,18,21)] = c('FG_percent', '3P_percent', '2P_percent', 'eFG_percent', 'FT_percent')
+
+## Adding a column with the data frame name
+mj_df = mj_df_without_name %>%
+  mutate(df_name = 'MJ')
+
+## Adding a new variable called binary_mp
+mod1_mj_df = mj_df %>%
+  mutate(binary_mp = case_when(
+    MP < 20 ~ 'few_mp',
+    MP >= 20 ~ 'large_mp'
+  ))
+```
+
+
 
 
 
