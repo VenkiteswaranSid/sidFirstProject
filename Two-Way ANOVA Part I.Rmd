@@ -19,3 +19,14 @@ Example 2: Does the type of drink (red bull, coffee, orange juice or water) or t
 Determine whether the population mean of finishing time of the 10K the same for these four drinks.
 Determine whether the population mean of finishing time of the 10K the same for the two types of food.
 Determine whether there is an interaction effect between food and drink types on the 10K finishing time.
+
+## What do these two examples have in common?
+- There are 3 variables
+- One variable is quantitative and the other two are categorical or categorical binary
+
+## Question 1: Create an example when it would be appropriate to implement Two-Way ANOVA. State the variables, their types (i.e., categorical “binary” or quantitative), and which are the explanatory variables and response variable.
+Does the gender of a group of people in the ages between 25 and 30 have an effect on their ability to run a 10K?
+
+
+
+
