@@ -25,8 +25,14 @@ Determine whether there is an interaction effect between food and drink types on
 - One variable is quantitative and the other two are categorical or categorical binary
 
 ## Question 1: Create an example when it would be appropriate to implement Two-Way ANOVA. State the variables, their types (i.e., categorical “binary” or quantitative), and which are the explanatory variables and response variable.
-Does the gender of a group of people in the ages between 25 and 30 have an effect on their ability to run a 10K?
+A student is studying for her finals exam in a few weeks. She wants to know whether the 5 types of flashcards she uses or the 3 types of textbooks she uses will have an effect on her test score. In this example, the types of flashcards and textbooks are the categorical variables, while the test score is the quantitative variable. The explanatory variables are the textbook and flashcard types and the response variable is the test score. 
 
+## Hypothesis Testing
+The null hypothesis for Two-Way ANOVA is that the population means are equal across both explanatory variables. On the other hand, the alternative hypothesis for One-Way ANOVA is the complement of the null hypothesis which is that at least one of the population means is different from the others.
+
+## Question 2: State the null the alternative hypotheses for the example that you came up with for your example in question 1.
+Null: The population means of test scores are the same across flashcard type.
+Alternative: The population means of test scores are not the same across flashcard type.
 
 
 
