@@ -101,7 +101,16 @@ ggboxplot(mod3_mj_df, x = "Pos", y = "PTS", color = "binary_mp",
   Within each position, large_mp always has a larger median points scored than few_mp, which can be attributed to players getting more time to score points.
   There is varying amounts of variability across positions, with PF looking like it has the highest variability.
   
-
+## Making a dot plot
+```{r}
+ggline(mod3_mj_df, x = "Pos", y = "PTS", color = "binary_mp",
+       add = c("mean_se", "dotplot"),
+       palette = c("#00AFBB", "#E7B800"))
+```
+## Interpretation
+  large_mp always has a larger median than small_mp
+  SF has the largest median points for large_mp
+  SG has the largest median points for small_mp
 
 
 
