@@ -75,6 +75,16 @@ mod1_mj_df = mj_df %>%
   ))
 ```
 
+## Question 3: State the null the alternative hypotheses based on these variables for your data set.
+Null: The population means of points scored is same across all positions.
+Alternative: The population means of points scored is not the same across all positions. 
+
+Null: The population means of points scored is the same whether few minutes or many minutes are played.
+Alternative: The population means of points scored is not the same whether few minutes or many minutes are played.
+
+Null: There is not an interaction effect between minutes played and position.
+Alternative: There is an interaction effect between minutes played and position.
+
 
 
 
