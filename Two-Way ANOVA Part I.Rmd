@@ -74,6 +74,9 @@ mod1_mj_df = mj_df %>%
     MP < 20 ~ 'few_mp',
     MP >= 20 ~ 'large_mp'
   ))
+
+mod2_mj_df = subset(mod1_mj_df, Pos != 'SG-SF')
+mod3_mj_df = subset(mod2_mj_df, Pos != 'SF-SG')
 ```
 
 ## Question 3: State the null the alternative hypotheses based on these variables for your data set.
@@ -86,6 +89,18 @@ Alternative: The population means of points scored is not the same whether few m
 Null: There is not an interaction effect between minutes played and position.
 Alternative: There is an interaction effect between minutes played and position.
 
+## Creating a box plot
+```{r}
+ggboxplot(mod3_mj_df, x = "Pos", y = "PTS", color = "binary_mp",
+          palette = c("#00AFBB", "#E7B800")) +
+  labs(x = 'Position', y = 'Points Scored', title = 'Box Plot for One-Way ANOVA with means') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+
+```
+## Interpretation
+  Within each position, large_mp always has a larger median points scored than few_mp, which can be attributed to players getting more time to score points.
+  There is varying amounts of variability across positions, with PF looking like it has the highest variability.
+  
 
 
 
