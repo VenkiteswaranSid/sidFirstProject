@@ -69,9 +69,9 @@ footnote('Pos denotes the Type of Positions')
 ```
 
 ## Interpretation
-The basic interpretation of this summary was done within One-Way ANOVA in that the sample mean of points is lowest in for the center position and highest for the small forward position.
-It is important to note that SF has the highest sd and mean, while C has the lowest sd and mean. This suggests that there is a high level of variance at the SF position and a low level of variance in the C position.
-The sample size is not equal across the number of positions.
+  The basic interpretation of this summary was done within One-Way ANOVA in that the sample mean of points is lowest in for the center position and highest for the small forward position.
+  It is important to note that SF has the highest sd and mean, while C has the lowest sd and mean. This suggests that there is a high level of variance at the SF position and a low level of variance in the C position.
+  The sample size is not equal across the number of positions.
 
 ## Summary of 1 of the Explanatory Variables: Minutes Played
 ```{r}
@@ -87,9 +87,9 @@ footnote('MP denotes the Amount of Minutes Played')
 ```
 
 ## Interpretation
-The difference in mean points scored is very different between few_mp and large_mp.
-There is some variability in points scored by players who play few minutes, but it is very low compared to the points scored by players who play large minutes.
-The sample size is not equal across the amount of minutes played.
+  The difference in mean points scored is very different between few_mp and large_mp.
+  There is some variability in points scored by players who play few minutes, but it is very low compared to the points scored by players who play large minutes.
+  The sample size is not equal across the amount of minutes played.
 
 ## Summary for both explanatory variables
 ```{r}
@@ -104,4 +104,32 @@ kable() %>%
 kable_styling() %>%
 footnote('both denotes groups based on the Amount of Minutes Played and Position Type')
 ```
+
+## Interpretation 
+  It is important to note that an interaction term means that across all 10
+groups(for example 1 group binary_mp = few_mp and Pos = PG) looks for whether there is a pattern across 1 explanatory variable while holding another constant.
+  When focusing on only few_mp, it is apparent that the points averaged increases between C and PF, PF and PG, PG and SF, and SF and SG.
+  When investigating the players with large_mp, SF has the highest mean points averaged, which is different from few_mp.
+  Depending on which group is being investigated, a different position will have the highest mean points averaged.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
