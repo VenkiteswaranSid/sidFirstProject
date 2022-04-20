@@ -73,3 +73,16 @@ The basic interpretation of this summary was done within One-Way ANOVA in that t
 It is important to note that SF has the highest sd and mean, while C has the lowest sd and mean. This suggests that there is a high level of variance at the SF position and a low level of variance in the C position.
 The sample size is not equal across the number of positions.
 
+## Summary of 1 of the Explanatory Variables: Minutes Played
+```{r}
+mod3_mj_df %>%
+group_by(binary_mp) %>%
+summarise(`Sample Mean MP` = mean(PTS, na.rm = TRUE),
+`Sample SD MP` = sd(PTS, na.rm = TRUE),
+`Sample Size MP` = n()) %>%
+
+kable() %>%
+kable_styling() %>%
+footnote('MP denotes the Amount of Minutes Played')
+```
+
