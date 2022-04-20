@@ -65,7 +65,7 @@ summarise(`Sample Mean Pos` = mean(PTS, na.rm = TRUE),
 
 kable() %>%
 kable_styling() %>%
-footnote('Pos denotes the Number of Positions')
+footnote('Pos denotes the Type of Positions')
 ```
 
 ## Interpretation
@@ -90,3 +90,18 @@ footnote('MP denotes the Amount of Minutes Played')
 The difference in mean points scored is very different between few_mp and large_mp.
 There is some variability in points scored by players who play few minutes, but it is very low compared to the points scored by players who play large minutes.
 The sample size is not equal across the amount of minutes played.
+
+## Summary for both explanatory variables
+```{r}
+mod3_mj_df %>%
+group_by(binary_mp, Pos) %>%
+summarise(`Sample Mean both` = mean(PTS, na.rm = TRUE),
+`Sample SD both` = sd(PTS, na.rm = TRUE),
+`Sample Size both` = n(),
+.groups = NULL) %>%
+
+kable() %>%
+kable_styling() %>%
+footnote('both denotes groups based on the Amount of Minutes Played and Position Type')
+```
+
