@@ -68,3 +68,8 @@ kable_styling() %>%
 footnote('Pos denotes the Number of Positions')
 ```
 
+## Interpretation
+The basic interpretation of this summary was done within One-Way ANOVA in that the sample mean of points is lowest in for the center position and highest for the small forward position.
+It is important to note that SF has the highest sd and mean, while C has the lowest sd and mean. This suggests that there is a high level of variance at the SF position and a low level of variance in the C position.
+The sample size is not equal across the number of positions.
+
