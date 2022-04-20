@@ -86,3 +86,7 @@ kable_styling() %>%
 footnote('MP denotes the Amount of Minutes Played')
 ```
 
+## Interpretation
+The difference in mean points scored is very different between few_mp and large_mp.
+There is some variability in points scored by players who play few minutes, but it is very low compared to the points scored by players who play large minutes.
+The sample size is not equal across the amount of minutes played.
