@@ -63,3 +63,9 @@ model2 <- aov(PTS ~ Pos * binary_mp, mod3_mj_df)
 tidy(model2)
 ```
 
+## Explain results
+
+## Model 1 Results
+This model tests whether position type and amount of minutes played have an impact on points scored. We notice the following:
+  The types of positions have different means of points averaged due to the small p-value (9.150038e-09)
+  There is a lot of evidence that there is a difference in means of points averaged when evaluating the minutes played because the p value (1.171265e-76) is less than 0.01
