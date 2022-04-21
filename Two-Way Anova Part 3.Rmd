@@ -69,3 +69,16 @@ tidy(model2)
 This model tests whether position type and amount of minutes played have an impact on points scored. We notice the following:
   The types of positions have different means of points averaged due to the small p-value (9.150038e-09)
   There is a lot of evidence that there is a difference in means of points averaged when evaluating the minutes played because the p value (1.171265e-76) is less than 0.01
+  
+## Model 2 Results
+This model tests whether position type and amount of minutes played have an impact on points averaged while also testing whether there is an interaction between the explanatory variable that impacts points averaged. We notice the following:
+  This models identifies the same conclusion regarding the impact of position type and amount of minutes played on the mean of points averaged as model 1
+  Since the p-value (1.158073e-01) is large for the interaction term (Pos:binary_mp) we will reject the importance of the interaction term
+  It is conclusive that both position type and amount of minutes played has an impact on the means of points averaged
+
+
+
+
+
+
+
