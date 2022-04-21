@@ -49,3 +49,11 @@ mod2_mj_df = subset(mod1_mj_df, Pos != 'SG-SF')
 mod3_mj_df = subset(mod2_mj_df, Pos != 'SF-SG')
 ```
 
+## Implementation of the Two-Way ANOVA Model
+
+## Model 1 Testing both variables (position type and amount of minutes played) independently
+```{r}
+model1 <- aov(PTS ~ Pos + binary_mp, mod3_mj_df)
+tidy(model1)
+```
+
