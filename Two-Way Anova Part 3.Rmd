@@ -57,3 +57,9 @@ model1 <- aov(PTS ~ Pos + binary_mp, mod3_mj_df)
 tidy(model1)
 ```
 
+## Model 2 Testing the interaction term
+```{r}
+model2 <- aov(PTS ~ Pos * binary_mp, mod3_mj_df)
+tidy(model2)
+```
+
