@@ -22,3 +22,12 @@ students_df = read_csv(url(students_url))
 student_grade_df = inner_join(students_df, grades_df, by = 'student_id')
 ```
 
+## Question 8: Of the English majors, who performed the worst on assignment 1?
+```{r}
+english_major_df = student_grade_df %>%
+  subset(assignment_id == 1)
+```
+Matthew performed the worst on assignment 1, with a grade of 4.
+
+
+
