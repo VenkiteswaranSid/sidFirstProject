@@ -1,0 +1,80 @@
+---
+title: "An Interview Test Part 1"
+author: "Siddharth V"
+date: '2022-04-25'
+output: html_document
+---
+
+## Load in the libraries and the data frames
+```{r}
+library(readr)
+library(tidyverse)
+grades_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/grades.csv'
+assignments_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/assignments.csv' 
+students_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/students.csv'
+grades_df = read_csv(url(grades_url))
+assignments_df = read_csv(url(assignments_url))
+students_df = read_csv(url(students_url))
+```
+
+## Question 1: How many students are there? Make sure to check for duplicate students.
+```{r}
+## Create a vector of the student names
+student_names_vec <- c(students_df$student_name)
+
+## Check for duplicated elements
+duplicated(student_names_vec)
+
+## Keep only the unique elements 
+unique(student_names_vec)
+```
+There are 54 students.
+
+## Question 2: How many unique majors are there? How many students are in each major?
+```{r}
+## Create a vector with the majors
+student_major <- c(students_df$major)
+
+## Look for unique majors
+unique(student_major)
+
+## Create a dataframe with the number of times a major appears
+major_df = as.data.frame(table(student_major))
+```
+There are 6 unique majors, with 27 students in Business, 52 in Engineering, 30 in both English and Philosophy, 21 in Science, and 20 in Statistics and Math.
+
+## Question 3: How many students are in each major by student level?
+```{r}
+## Create a vector for student level
+student_level <- c(students_df$student_level)
+
+## Create a dataframe with both variables
+major_by_level_df = as.data.frame(table(student_major, student_level))
+
+## For the answer to the question, it can be found by looking at major_by_level_df
+major_by_level_df
+```
+
+## Question 4: Using the information from Q3., which major and student level has the least amount of students? 
+The major and student level with the least amount of students is Engineering for Seniors, which has no students in it. 
+
+## Question 5: Create a visualization that displays the frequency of each major. Make this visualization look very professional
+```{r}
+major_df %>%
+  ggplot(aes(x = student_major, y = Freq)) +
+  geom_bar(stat='identity') +
+  theme_bw() +
+  labs(x = 'Student Major', y = 'Students', title = 'Frequency of Students Taking Each Major') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+```
+
+## Question 6: Create a visualization that displays the frequency of each major by student level. Make this visualization look very professional (i.e., titles and color). Change the size of the font so that it is presentable.
+```{r}
+major_by_level_df %>%
+  ggplot(aes(x = student_major, y = Freq, color = student_level)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = 'Student Major', y = 'Students', title = 'Frequency of Students Taking Each Major With Respect to Student Level') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 10))
+```
+
