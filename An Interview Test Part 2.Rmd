@@ -29,5 +29,19 @@ english_major_df = student_grade_df %>%
 ```
 Matthew performed the worst on assignment 1, with a grade of 4.
 
+## Question 9: Which assignment did the junior engineer students performed the best on average using their average numeric grade?
+```{r}
+average_grade_assignment_df = student_grade_df %>%
+  group_by(assignment_id, student_level, major) %>%
+  summarise_at(vars(numeric_grade), list(name = mean)) 
+
+mod1_average_grade_assignment_df = ungroup(average_grade_assignment_df)
+
+junior_engineer_df = mod1_average_grade_assignment_df %>%
+  filter(major == 'Engineering',
+         student_level == '3-Junior')
+```
+The junior engineer students performed best on assignment 20 with an average grade of 76.214286.
+
 
 
