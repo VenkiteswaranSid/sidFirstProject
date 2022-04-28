@@ -9,6 +9,7 @@ output: html_document
 ```{r}
 library(readr)
 library(tidyverse)
+library(repr)
 grades_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/grades.csv'
 assignments_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/assignments.csv' 
 students_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/students.csv'
@@ -58,3 +59,13 @@ Sophomores performed best as Statistics and Math majors with an average numeric 
 student_performance_df = inner_join(student_grade_df, assignments_df, by = 'assignment_id')
 ```
 
+## Question 12: Provide a visualization that displays how students perform on exams by major and student level. There are a lot of way to approach this question, however, I am interested in what you are able to create. Describe any trends you notice.
+```{r}
+student_performance_df %>%
+  ggplot(aes(x = major, y = numeric_grade, color = student_level)) +
+  geom_violin() +
+  labs(x = 'Student Major', y = 'Grades Received', title = 'Distribution of Grades Received on Assignments by Student Level', subtitle = 'The colors correlating with student level are shown on the right ') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 10)) +
+  theme(plot.subtitle = element_text(hjust = 0.5, size = 10)) 
+```
+Some trends that I noticed is that many of the assignments were scored very low, as most of the data visualized by the violin plot is concentrated in the lower regions of the plot. I also noticed that this plot showed that there were no seniors who majored in engineering, as that cluster only had three violin plots available. The engineering violin plots were also much thicker than the other majors, which leads me to think that those assignments are worth less points than the assignments given by other majors, or that the entire group of students who majored in engineering got very low scores. 
