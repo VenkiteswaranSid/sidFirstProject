@@ -53,4 +53,8 @@ average_student_grade_df = ungroup(mod2_average_grade_df)
 ```
 Sophomores performed best as Statistics and Math majors with an average numeric grade of 17.63333.
 
+## Question 11: Join the data frame from question 7 to the assignment data frame. Save this data frame with appropriate an appropriate name.
+```{r}
+student_performance_df = inner_join(student_grade_df, assignments_df, by = 'assignment_id')
+```
 
