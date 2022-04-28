@@ -33,7 +33,7 @@ Matthew performed the worst on assignment 1, with a grade of 4.
 ```{r}
 average_grade_assignment_df = student_grade_df %>%
   group_by(assignment_id, student_level, major) %>%
-  summarise_at(vars(numeric_grade), list(name = mean)) 
+  summarise_at(vars(numeric_grade), list(mean_score = mean)) 
 
 mod1_average_grade_assignment_df = ungroup(average_grade_assignment_df)
 
@@ -43,5 +43,14 @@ junior_engineer_df = mod1_average_grade_assignment_df %>%
 ```
 The junior engineer students performed best on assignment 20 with an average grade of 76.214286.
 
+## Questioin 10: Which student level performed the best as Statistics and Mathematics major using all their assignments average numeric grade?
+```{r}
+mod2_average_grade_df = student_grade_df %>%
+  group_by(student_level, major) %>%
+  summarise_at(vars(numeric_grade), list(mean_assignment_grade = mean)) 
+
+average_student_grade_df = ungroup(mod2_average_grade_df)
+```
+Sophomores performed best as Statistics and Math majors with an average numeric grade of 17.63333.
 
 
