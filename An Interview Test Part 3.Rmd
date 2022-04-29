@@ -26,3 +26,5 @@ freshman_exam2_df = student_performance_df %>%
          student_level == '1-Freshmen')
 ```
 
+## Part B: What is the explanatory and response variables?
+The explanatory variable is the major type and the response variable is the numeric grade.
