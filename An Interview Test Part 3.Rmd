@@ -1,0 +1,28 @@
+---
+title: "An Interview Test Part 3"
+author: "Siddharth V"
+date: '2022-04-29'
+output: html_document
+---
+
+## Q13. Using the data frame from question 11 and consider only freshmen 2nd exam scores (Hint: investigate the assignment_id variable) and implement One-Way ANOVA in which you would like to determine if the populations means of performance on the exam (numeric_grade) are the same across major. Answer the following questions to be able to fully grasp the material.
+
+## Load in the data and the libraries
+```{r}
+library(readr)
+library(tidyverse)
+grades_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/grades.csv'
+assignments_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/assignments.csv' 
+students_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/students.csv'
+grades_df = read_csv(url(grades_url))
+assignments_df = read_csv(url(assignments_url))
+students_df = read_csv(url(students_url))
+```
+
+## Part A: Create the data frame that will allow you to answer the statistical question.
+```{r}
+freshman_exam2_df = student_performance_df %>%
+  filter(assignment_id == 20,
+         student_level == '1-Freshmen')
+```
+
