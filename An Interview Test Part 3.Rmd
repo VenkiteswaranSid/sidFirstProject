@@ -28,3 +28,7 @@ freshman_exam2_df = student_performance_df %>%
 
 ## Part B: What is the explanatory and response variables?
 The explanatory variable is the major type and the response variable is the numeric grade.
+
+## Part C: Write the null and alternative hypotheses?
+Null: The type of major a freshman has does not impact their numeric grade on exam 2.
+Alternative: The type of major a freshman has does impact their numeric grade on exam 2.
