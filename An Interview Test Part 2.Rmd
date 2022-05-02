@@ -9,7 +9,6 @@ output: html_document
 ```{r}
 library(readr)
 library(tidyverse)
-library(repr)
 grades_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/grades.csv'
 assignments_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/assignments.csv' 
 students_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/students.csv'
@@ -25,6 +24,7 @@ student_grade_df = inner_join(students_df, grades_df, by = 'student_id')
 
 ## Question 8: Of the English majors, who performed the worst on assignment 1?
 ```{r}
+## Create a data frame for all English majors and filter it by assignment 1
 english_major_df = student_grade_df %>%
   subset(assignment_id == 1)
 ```
@@ -32,12 +32,15 @@ Matthew performed the worst on assignment 1, with a grade of 4.
 
 ## Question 9: Which assignment did the junior engineer students performed the best on average using their average numeric grade?
 ```{r}
+## Create a data frame that shows the average grade for each assignment and group it by major and student level
 average_grade_assignment_df = student_grade_df %>%
   group_by(assignment_id, student_level, major) %>%
   summarise_at(vars(numeric_grade), list(mean_score = mean)) 
 
+## Use the ungroup function so that the data can be properly looked at
 mod1_average_grade_assignment_df = ungroup(average_grade_assignment_df)
 
+## Select only the juniors who majored in engineering and create a new data frame
 junior_engineer_df = mod1_average_grade_assignment_df %>%
   filter(major == 'Engineering',
          student_level == '3-Junior')
@@ -46,21 +49,25 @@ The junior engineer students performed best on assignment 20 with an average gra
 
 ## Questioin 10: Which student level performed the best as Statistics and Mathematics major using all their assignments average numeric grade?
 ```{r}
+## Create a data frame to find the average grade for each assignment and group it by student level and major 
 mod2_average_grade_df = student_grade_df %>%
   group_by(student_level, major) %>%
   summarise_at(vars(numeric_grade), list(mean_assignment_grade = mean)) 
 
+## Use the ungroup function so that the data can be properly looked at
 average_student_grade_df = ungroup(mod2_average_grade_df)
 ```
 Sophomores performed best as Statistics and Math majors with an average numeric grade of 17.63333.
 
 ## Question 11: Join the data frame from question 7 to the assignment data frame. Save this data frame with appropriate an appropriate name.
 ```{r}
+## Join the student grade data frame with the assignments data frame by the assignment id
 student_performance_df = inner_join(student_grade_df, assignments_df, by = 'assignment_id')
 ```
 
 ## Question 12: Provide a visualization that displays how students perform on exams by major and student level. There are a lot of way to approach this question, however, I am interested in what you are able to create. Describe any trends you notice.
 ```{r}
+## Create a violin plot to see the distribution of the data
 student_performance_df %>%
   ggplot(aes(x = major, y = numeric_grade, color = student_level)) +
   geom_violin() +
