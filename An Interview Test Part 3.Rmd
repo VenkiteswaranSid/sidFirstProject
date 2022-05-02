@@ -11,6 +11,7 @@ output: html_document
 ```{r}
 library(readr)
 library(tidyverse)
+library(tidymodels)
 grades_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/grades.csv'
 assignments_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/assignments.csv' 
 students_url = 'https://raw.githubusercontent.com/gato365/emandoesgato365/main/content/post/2022-04-25-an-interview-test/students.csv'
@@ -21,6 +22,7 @@ students_df = read_csv(url(students_url))
 
 ## Part A: Create the data frame that will allow you to answer the statistical question.
 ```{r}
+## Filter by assignment id and the student level
 freshman_exam2_df = student_performance_df %>%
   filter(assignment_id == 20,
          student_level == '1-Freshmen')
@@ -52,5 +54,25 @@ freshman_exam2_df %>%
   labs(x = 'Major', y = 'Score on Second Exam', title = 'Box Plot for One-Way ANOVA') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 15))
+```
+
+## Part E: Perform and interpret the analysis.
+```{r}
+## Calculating the One-Way Anova Ratio
+ratio_anova = sd(summary_freshman_exam2_df$mean_score) / mean(summary_freshman_exam2_df$sd_score)
+ratio_anova
+```
+The ratio here is 0.5779115.
+
+```{r}
+## Compare the ratio between the max and min standard deviation
+max(summary_freshman_exam2_df$sd_score)/min(summary_freshman_exam2_df$sd_score)
+```
+The ratio is less than two, so we can assume that the standard deviation across all groups is approximately equal.
+
+```{r}
+## Implementation of One-Way Anova model
+model1 <- aov(numeric_grade ~ major, freshman_exam2_df)
+tidy(model1)
 ```
 
