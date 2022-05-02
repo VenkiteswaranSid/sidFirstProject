@@ -70,6 +70,7 @@ major_df %>%
 
 ## Question 6: Create a visualization that displays the frequency of each major by student level. Make this visualization look very professional (i.e., titles and color). Change the size of the font so that it is presentable.
 ```{r}
+## Create a scatterplot to visualize the data
 major_by_level_df %>%
   ggplot(aes(x = student_major, y = Freq, color = student_level)) +
   geom_point() +
