@@ -1,0 +1,36 @@
+---
+title: "Phoenix Suns Regular Season Analysis"
+author: "Siddharth V"
+date: '2022-05-22'
+output: html_document
+---
+
+## Some Context
+The Phoenix Suns had a remarkable regular season this year, and although it ended in disappointment in the playoffs, that should not take away from the sucess that the team from the valley had during the regular season. The Suns won a franchise record 64 games this year and were owners of the NBA's best record and the first seed in the Western Conference. Let's take a look at some of the trends that can be observed from this season by the Suns. 
+
+## Load in the appropriate libraries
+```{r}
+library(tidyverse)
+library(htmltools)
+library(rvest)
+```
+
+## Bring in the data 
+```{r}
+## Create a URL for the Phoenix Suns 2021-22 season
+suns_url <- read_html("https://www.basketball-reference.com/teams/PHO/2022/gamelog/")
+
+## Convert the information in the URL into a list
+suns_info_lst = suns_url %>%
+  html_nodes("#tgl_basic") %>%
+  html_table()
+
+## Create a temporary data frame to hold the data from the info list
+temp_suns_df = suns_info_lst[[1]]
+
+## Clean the data
+## Start by removing team and opponent from the column names
+colnames(temp_suns_df) = temp_suns_df[1,]
+
+```
+
