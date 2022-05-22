@@ -32,5 +32,12 @@ temp_suns_df = suns_info_lst[[1]]
 ## Start by removing team and opponent from the column names
 colnames(temp_suns_df) = temp_suns_df[1,]
 
+## Make the team and oppenent stats discernable in the column names
+colnames(temp_suns_df)[c(4,7,8,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41)] = c("game_location","Tm_Score","Opp_Score","Opp_FG","Opp_FGA","Opp_FG%","Opp_3P","Opp_3PA","Opp_3P%","Opp_FT","Opp_FTA","Opp_FT%","Opp_ORB","Opp_TRB","Opp_AST","Opp_STL","Opp_BLK","Opp_TOV","Opp_PF")
+
+## Remove Rk
+mod1_temp_suns_df = temp_suns_df %>%
+  filter(Rk != "Rk")
 ```
+
 
