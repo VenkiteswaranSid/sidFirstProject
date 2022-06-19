@@ -13,6 +13,7 @@ The Phoenix Suns had a remarkable regular season this year, and although it ende
 library(tidyverse)
 library(htmltools)
 library(rvest)
+library(lubridate)
 ```
 
 ## Bring in the data 
@@ -33,11 +34,96 @@ temp_suns_df = suns_info_lst[[1]]
 colnames(temp_suns_df) = temp_suns_df[1,]
 
 ## Make the team and oppenent stats discernable in the column names
-colnames(temp_suns_df)[c(4,7,8,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41)] = c("game_location","Tm_Score","Opp_Score","Opp_FG","Opp_FGA","Opp_FG%","Opp_3P","Opp_3PA","Opp_3P%","Opp_FT","Opp_FTA","Opp_FT%","Opp_ORB","Opp_TRB","Opp_AST","Opp_STL","Opp_BLK","Opp_TOV","Opp_PF")
+colnames(temp_suns_df)[c(4,6,7,8,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41)] = c("game_location","win_or_loss","Tm_Score","Opp_Score","Opp_FG","Opp_FGA","Opp_FG%","Opp_3P","Opp_3PA","Opp_3P%","Opp_FT","Opp_FTA","Opp_FT%","Opp_ORB","Opp_TRB","Opp_AST","Opp_STL","Opp_BLK","Opp_TOV","Opp_PF")
 
-## Remove Rk
+## Remove the first row with redundant column names 
 mod1_temp_suns_df = temp_suns_df %>%
-  filter(Rk != "Rk")
+  filter(Rk != "Rk") %>%
+  filter(!row_number() %in% c(21,42,63,84)) ## Removes rows that contain the values "team" and "opponent"
+
+## Remove the column with NA values and the Rk column
+mod2_temp_suns_df = mod1_temp_suns_df %>%
+  select(-"NA", -"Rk")
+
+## Change the values that game_location provides
+mod3_temp_suns_df = mod2_temp_suns_df %>%
+  mutate(game_location = case_when(
+    game_location == "@" ~ "Away",
+    TRUE ~ "Home"
+  ))
+
+## Change the variables in the data frame to be numeric
+mod4_temp_suns_df = mod3_temp_suns_df %>%
+  mutate_if(~any(str_detect(string = ., pattern = '^-?[0-9]\\d*(\\.\\d+)?$')), 
+            ~ as.numeric(.))
+
+## Add a column with the months of the year
+phoenix_suns_df = mod4_temp_suns_df %>%
+  mutate(proper_month = month(Date, label = TRUE, abbr = FALSE))
 ```
 
+## Looking for trends in the data
+Now that the data has been completely cleaned, lets take a look at some of the trends that were present in this past season for the Suns and see if those trends had an impact on winning or not.
+
+## Statistical Question 1: Is there a trend between the number of offensive rebounds and the number of free throw attempts by the Suns?
+```{r}
+## Visualize the data from the dataset
+phoenix_suns_df %>%
+  ggplot(aes(x = ORB, y = FTA)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw()
+```
+## Summary
+From taking a brief look at this graph, it is evident that as the number of offensive rebounds increased, the number of free throws attempted decreased, as shown by the downward line of best fit for the graph. 
+
+```{r}
+## Find the correlation between the two variables
+phoenix_suns_df %>%
+  select(ORB, FTA) %>%
+  cor()
+```
+## Summary
+As seen in here, there is a slight negative correlation between the variables of ORB, offensive rebounds, and FTA, free throw attempts. This could be seen in the graph shown above, but this value gives us a concrete number to base the correlation of the data on. 
+
+```{r}
+## Create a linear model with the two variables and summarize that model
+model_1 = lm(ORB ~ FTA, data = phoenix_suns_df)
+summary(model_1)
+```
+## Summary
+From this model, a number of different things can be ascertained, most notably. the variation within the data. The variation in the data can be represented in the multiple R-squared value, which is 3.131% here. A low multiple R-squared value generally indicates that there is more variance than is to be expected, which is what we see here. 
+
+## Analysis
+From all three of these tools, we can see that when the Suns got more offensive rebounds, they attempted less free throws. This may sound counter intuitive, because if a team gets the ball back after a missed shot near the rim, which is where many offensive rebounds are gathered, there is a chance that they will get fouled when going back up for another shot. However, as shown in both the graph and the correlation value, the relationship between the variables of offensive rebounds and free throws attempted is clearly negative. This assumption should be taken with a grain of salt though, as there is a lot of variance in the data, as shown by the multiple R-squared value. If more data was collected, there would have been a clearer trend, rather than what was shown from the 82 games of the NBA regular season. 
+
+```{r}
+phoenix_suns_df %>%
+  ggplot(aes(x = FGA, y = Tm_Score)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw()
+```
+
+```{r}
+phoenix_suns_df %>%
+  ggplot(aes(x = AST, y = TOV, colour = win_or_loss)) +
+  geom_point() +
+  theme_bw()
+``` 
+
+
+```{r}
+phoenix_suns_df %>%
+  ggplot(aes(x = win_or_loss, y = FT)) +
+  geom_violin()
+```
+
+```{r}
+phoenix_suns_df %>%
+  ggplot(aes(x = FGA, y = Opp_Score)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw()
+```
 
