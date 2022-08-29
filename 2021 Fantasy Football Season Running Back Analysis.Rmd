@@ -1,0 +1,52 @@
+---
+title: "2021 Fantasy Football Season Running Back Analysis"
+author: "Siddharth V"
+date: "2022-08-28"
+output: html_document
+---
+
+## The 2021 Fantasy Football Season
+Ahhh fantasy football. The most stressful, yet fun activity in many people's lives. So many players drafted, some surprised, and some disappointed. In this post, let's take a look at how the most important position in fantasy football, running backs, performed during the 2021 season, and if there are any useful trends present that can help us draft better in the future. 
+
+## Load in the appropriate libraries
+```{r}
+library(tidyverse)
+library(htmltools)
+library(rvest)
+library(lubridate)
+```
+
+## Bring in the data
+```{r}
+## Create a url for the fantasy season
+fantasy_url <- read_html('https://www.pro-football-reference.com/years/2021/fantasy.htm') 
+## Convert the url info into a list
+fantasy_lst = fantasy_url %>%
+  html_nodes('#fantasy') %>%
+  html_table()
+
+## Create a temporary data frame to hold the data from the info list
+temp_fantasy_df = fantasy_lst[[1]]
+```
+
+## Clean the data
+```{r}
+## Remove the headings from the data frame
+colnames(temp_fantasy_df) = temp_fantasy_df[1,]
+
+## Change the column names so that the data frame can be modified
+colnames(temp_fantasy_df)[c(9,10,11,13,14,16,19,21,24)] = c("pass_att","pass_yds","pass_td","rush_att","rush_yds","rush_tds","rec_yds","rec_tds","total_tds")
+
+## Remove the first row with redundant column names 
+mod1_fantasy_df = temp_fantasy_df %>%
+  filter(Rk != "Rk")
+
+## Remove the Rk column and values in the Tm column that are 2TM and 3TM
+mod2_fantasy_df = mod1_fantasy_df %>%
+  select(-"Rk") %>%
+  filter(Tm != "2TM" & Tm != "3TM")
+
+## Fill in the blank values with NAs so that they can be removed at a later time
+mod2_fantasy_df[mod2_fantasy_df==""] <- NA
+```
+
